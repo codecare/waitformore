@@ -1,0 +1,19 @@
+# this is a backend to use when you want to develop the frontend
+version: '3.5'
+
+services:
+
+  wait4moredb:
+    image: postgres:12.2-alpine
+    container_name: wait4moredb-dev
+    environment:
+      POSTGRES_PASSWORD: zCpzQ7VF7%GFmTM
+      POSTGRES_USER: wait4more
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+     - ./data:/var/lib/postgresql/data
+     - ./dbinit:/docker-entrypoint-initdb.d
+    ports:
+     - "5432:5432"
+
+

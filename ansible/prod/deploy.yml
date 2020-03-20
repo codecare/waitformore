@@ -1,0 +1,42 @@
+- hosts: waitformoredev01
+  tasks:
+
+    - name: copy docker-compose
+      template: src=docker-compose.yml dest=/opt/waitformore/docker-compose.yml
+
+    - name: make config dir for lets linuxserver/letsencrypt
+      file:
+        path: /opt/waitformore/config/nginx/site-confs
+        state: directory
+        mode: '0775'
+
+    - name: override nginx conf of linuxserver/letsencrypt
+      copy:
+        src: nginx.conf
+        dest: /opt/waitformore/config/nginx/site-confs/default
+        owner: waitformore
+        group: docker
+        mode: '0664'
+
+    - name: make dbinit dir
+      file:
+        path: /opt/waitformore/dbinit
+        state: directory
+        mode: '0775'
+
+    - name: copy db init
+      copy:
+        src: dbinit/V1.0.0.0__init.sql
+        dest: /opt/waitformore/dbinit/V1.0.0.0__init.sql
+        owner: waitformore
+        group: docker
+        mode: '0664'
+
+    - name: call docker-compose up -d
+      shell: "docker-compose up -d"
+      args:
+        chdir: /opt/waitformore
+
+
+
+

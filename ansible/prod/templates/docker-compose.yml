@@ -1,0 +1,62 @@
+version: '3.5'
+
+networks:
+  wait4more-network:
+
+services:
+
+  wait4more-db:
+    image: postgres:12.2-alpine
+    container_name: wait4more-db
+    environment:
+      POSTGRES_PASSWORD: {{ database_pwd }}
+      POSTGRES_USER: wait4more
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./dbinit:/docker-entrypoint-initdb.d
+    networks:
+      - wait4more-network
+
+  wait4more-backend:
+    image: codecare.azurecr.io/waitformore-backend:{{ backend_version }}
+    container_name: wait4more-backend
+    ports:
+      - "8081"
+    environment:
+      db_hostname: "wait4more-db"
+      db_port: "5432"
+      db_user: "wait4more"
+      db_password: {{ database_pwd }}
+      db_database: "wait4more"
+    networks:
+      - wait4more-network
+
+  wait4more-frontend:
+    image: codecare.azurecr.io/waitformore-frontend:{{ frontend_version }}
+    container_name: wait4more-frontend
+    ports:
+      - "6688"
+    networks:
+      - wait4more-network
+
+  letsencrypt:
+    image: linuxserver/letsencrypt:1.3.0-ls103
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - URL=wartewarte.de
+      - VALIDATION=http
+      - SUBDOMAINS=www,
+    volumes:
+      - ./config:/config
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
+    networks:
+      - wait4more-network

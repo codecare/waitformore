@@ -1,0 +1,19 @@
+version: "3.5"
+
+# this one is just for development without npm installed
+
+# docker-compose run --rm --service-ports waitformore-npm-dev
+
+services:
+  waitformore-npm-dev:
+    image: node:13.10.1-stretch
+    container_name: waitformore-npm-dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/workdir
+    entrypoint: /bin/bash
+    stdin_open: true
+    tty: true
+
+
