@@ -7,5 +7,4 @@ type QueueRepository interface {
 	PullByUserKey(userKey string) (QueueDefinition, *RepositoryError)
 	CallByAdminKey(adminKey string) (QueueDefinition, *RepositoryError)
 	GetStatus() (QueueingStatus, *RepositoryError)
-
 }

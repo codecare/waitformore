@@ -1,3 +1,4 @@
+-- {{ ansible_managed }}
 CREATE TABLE QueueDefinition (
   id    SERIAL NOT NULL,
   Title   varchar(255) NOT NULL,

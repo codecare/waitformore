@@ -1,5 +1,7 @@
 version: '3.5'
 
+# {{ ansible_managed }}
+
 networks:
   wait4more-network:
 
@@ -9,7 +11,7 @@ services:
     image: postgres:12.2-alpine
     container_name: wait4more-db
     environment:
-      POSTGRES_PASSWORD: {{ database_pwd }}
+      POSTGRES_PASSWORD: "{{ database_pwd }}"
       POSTGRES_USER: wait4more
       PGDATA: /var/lib/postgresql/data
     volumes:
@@ -27,7 +29,7 @@ services:
       db_hostname: "wait4more-db"
       db_port: "5432"
       db_user: "wait4more"
-      db_password: {{ database_pwd }}
+      db_password: "{{ database_pwd }}"
       db_database: "wait4more"
     networks:
       - wait4more-network
@@ -51,7 +53,7 @@ services:
       - TZ=Europe/Berlin
       - URL=wartewarte.de
       - VALIDATION=http
-      - SUBDOMAINS=www,
+      - SUBDOMAINS=www,test
     volumes:
       - ./config:/config
     ports:

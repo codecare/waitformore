@@ -159,7 +159,7 @@
         <v-row>
             <v-col>
 
-                <div class="version">{{ $t('versionInfo' )}} {{ $t('version') }}</div>
+                <div class="version">{{ $t('versionLabel' )}} {{ $t('versionNumber') }}</div>
             </v-col>
         </v-row>
     </v-container>
