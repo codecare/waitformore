@@ -5,6 +5,7 @@ wait for more is a queueing service which allows anyone to provide a waiting que
 see a running version on:
 
     https://wartewarte.de
+    ssh waitformore@wartewarte.de
 
 # deployment
 
@@ -30,3 +31,7 @@ frontend is written in vuejs with vuetify
 ### continuous deployment with Jenkinsfile
 
 jenkins needs some credentials (see Jenkinsfile)
+
+
+
+
